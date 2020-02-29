@@ -6,29 +6,35 @@ const { Schema } = mongoose;
 
 const { TOKEN_SECRET } = process.env;
 
-const userSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
+const userSchema = new Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    highScore: {
+      type: Number,
+      default: 0,
+    },
   },
-  lastName: {
-    type: String,
-    required: true,
+  {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  highScore: {
-    type: Number,
-    default: 0,
-  },
-});
+);
 
 userSchema.virtual('name').get(function() {
   return `${this.firstName} ${this.lastName}`;
