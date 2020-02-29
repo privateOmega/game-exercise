@@ -29,10 +29,17 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
+    games: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'game',
+      },
+    ],
   },
   {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
+    timestamps: true,
   },
 );
 
