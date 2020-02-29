@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const { Schema } = mongoose;
+
+const { TOKEN_SECRET } = process.env;
 
 const userSchema = new Schema({
   firstName: {
@@ -40,6 +43,30 @@ userSchema.pre('save', async function(next) {
 userSchema.methods.isValidPassword = async function(password) {
   const compare = await bcrypt.compare(password, this.password);
   return compare;
+};
+
+userSchema.methods.generateAuthToken = function() {
+  const token = jwt.sign(
+    { _id: this._id, email: this.email, name: this.name },
+    TOKEN_SECRET,
+    { expiresIn: 60 * 60 },
+  );
+  return token;
+};
+
+userSchema.statics.findByCredentials = async function(
+  email,
+  password,
+) {
+  const userInstance = await userModel.findOne({ email });
+  if (!userInstance) {
+    throw new Error({ error: 'invalid login credentials' });
+  }
+  const validPassword = await userInstance.isValidPassword(password);
+  if (!validPassword) {
+    throw new Error({ error: 'invalid login credentials' });
+  }
+  return userInstance;
 };
 
 const userModel = mongoose.model('user', userSchema);
