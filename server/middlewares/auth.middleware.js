@@ -8,10 +8,11 @@ const authMiddleware = async (req, res, next) => {
   const headerValue = req.header('Authorization');
   const token = headerValue.replace('Bearer ', '');
 
-  const payload = jwt.verify(token, TOKEN_SECRET);
-
   try {
-    const userInstance = userModel.findById(payload._id);
+    const payload = jwt.verify(token, TOKEN_SECRET);
+    const userInstance = await userModel
+      .findById(payload._id)
+      .select({ password: false });
     if (!userInstance) {
       throw new Error({ error: 'unauthenticated' });
     }
