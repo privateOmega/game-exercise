@@ -2,9 +2,8 @@
   "name": "game-exercise",
   "version": "0.0.1",
   "description": "A simple html and js game.",
-  "main": "index.html",
   "scripts": {
-    "start": "ws --spa index.html",
+    "start": "node server/server.js",
     "test": "mocha server/tests/test.js"
   },
   "keywords": [
@@ -45,8 +44,11 @@
     ]
   },
   "dependencies": {
+    "bcrypt": "^4.0.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.2"
   }
 }
