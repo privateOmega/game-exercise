@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const asyncMiddleware = require('./utils/async-middleware');
+const mainRouter = require('./routes/main.route');
 
 const { PORT, MONGO_CONNECTION_URL } = process.env;
 
@@ -26,13 +27,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get(
-  '/status',
-  asyncMiddleware((req, res, next) => {
-    res.status(200);
-    res.json({ status: 'ok' });
-  }),
-);
+app.use('/', mainRouter);
 
 // catch all other routes
 app.use(
