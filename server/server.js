@@ -5,8 +5,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const asyncMiddleware = require('./middlewares/async.middleware');
+const authMiddleware = require('./middlewares/auth.middleware');
+
 const mainRouter = require('./routes/main.route');
 const userRouter = require('./routes/user.route');
+const gameRouter = require('./routes/game.route');
 
 const { PORT, MONGO_CONNECTION_URL } = process.env;
 
@@ -29,7 +32,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', mainRouter);
-app.use('/user', userRouter);
+app.use('/user', authMiddleware, userRouter);
+app.use('/game', authMiddleware, gameRouter);
 
 // catch all other routes
 app.use(
