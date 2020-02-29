@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const asyncMiddleware = require('./utils/async-middleware');
+const asyncMiddleware = require('./middlewares/async.middleware');
 const mainRouter = require('./routes/main.route');
 
 const { PORT, MONGO_CONNECTION_URL } = process.env;

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const asyncMiddleware = require('../utils/async-middleware');
+const asyncMiddleware = require('../middlewares/async.middleware');
 const userModel = require('../models/user.model');
 
 const mainRouter = express.Router();
