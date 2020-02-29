@@ -2,8 +2,24 @@ require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const asyncMiddleware = require('./utils/async-middleware');
+
+const { PORT, MONGO_CONNECTION_URL } = process.env;
+
+mongoose.connect(MONGO_CONNECTION_URL, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+});
+mongoose.connection.on('error', error => {
+  console.log('Unable to connect to mongo instance');
+  console.error(error);
+  process.exit(1);
+});
+mongoose.connection.on('connected', function() {
+  console.log('Connected to mongo instance');
+});
 
 const app = express();
 
@@ -34,7 +50,7 @@ app.use(
   }),
 );
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(PORT || 3000, () => {
   console.log(`Server started on port ${process.env.PORT || 3000}`);
 });
 
