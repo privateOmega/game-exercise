@@ -2,6 +2,7 @@ var myGameArea;
 var myGamePiece;
 var myObstacles = [];
 var myscore;
+var gameId;
 
 function restartGame() {
   document.getElementById('myfilter').style.display = 'none';
@@ -16,7 +17,7 @@ function restartGame() {
   startGame();
 }
 
-function startGame() {
+async function startGame() {
   myGameArea = new gamearea();
   myGamePiece = new component(30, 30, 'red', 10, 75);
   myscore = new component(
@@ -27,7 +28,22 @@ function startGame() {
     25,
     'text',
   );
-  myGameArea.start();
+  try {
+    const { token } = JSON.parse(
+      localStorage.getItem('game-exercise-user'),
+    );
+
+    const gameInstance = await fetch('/game/start', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(response => response.json());
+    gameId = gameInstance._id;
+    myGameArea.start();
+  } catch (error) {
+    console.log('Unable to start game');
+  }
 }
 
 function gamearea() {
@@ -105,6 +121,31 @@ function updateGameArea() {
   for (i = 0; i < myObstacles.length; i += 1) {
     if (myGamePiece.crashWith(myObstacles[i])) {
       myGameArea.stop();
+
+      const localUserInstance = JSON.parse(
+        localStorage.getItem('game-exercise-user'),
+      );
+      fetch(`/game/${gameId}/finish`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localUserInstance.token}`,
+        },
+        body: JSON.stringify({
+          score: myscore.score,
+        }),
+      });
+      localUserInstance.highScore = Math.max(
+        localUserInstance.highScore,
+        myscore.score,
+      );
+      localStorage.setItem(
+        'game-exercise-user',
+        JSON.stringify(localUserInstance),
+      );
+      document.getElementById('highscore').innerHTML =
+        localUserInstance.highScore;
+
       document.getElementById('myfilter').style.display = 'block';
       document.getElementById('myrestartbutton').style.display =
         'block';
@@ -169,4 +210,20 @@ function clearmove(e) {
   myGamePiece.speedY = 0;
 }
 
-startGame();
+(async () => {
+  try {
+    const { token } = JSON.parse(
+      localStorage.getItem('game-exercise-user'),
+    );
+
+    const userInstance = await fetch('/user/profile', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(response => response.json());
+  } catch (error) {
+    console.log('Unable to get profile details');
+  }
+  startGame();
+})();
