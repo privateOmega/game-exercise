@@ -1,6 +1,6 @@
 {
   "name": "game-exercise",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A simple html and js game.",
   "main": "src/server.js",
   "scripts": {
