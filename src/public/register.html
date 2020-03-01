@@ -121,6 +121,9 @@
           if (!response.user) {
             throw new Error('Registration Failed');
           }
+          if (response.message === 'forbidden') {
+            throw new Error('Another user with same email exist');
+          }
           localStorage.setItem(
             'game-exercise-user',
             JSON.stringify(response.user),
@@ -128,7 +131,9 @@
           window.location.replace('/game.html');
         } catch (error) {
           localStorage.removeItem('game-exercise-user');
-          alert('Registration failed');
+          alert(
+            'Registration failed due to either another user having same email or network issues.',
+          );
         }
       }
     </script>
