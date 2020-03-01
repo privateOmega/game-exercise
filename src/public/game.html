@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Page</title>
+  </head>
+  <body>
+    <div>
+      <div>
+        Hello
+        <h4 id="user-name">user</h4>
+        (highscore:
+        <h4 id="highscore">0</h4>
+        )
+      </div>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+    <p>Click the buttons to move the red square:</p>
+    <div
+      id="myfilter"
+      style="position:absolute;background-color:#000000;opacity:0.3;width:322px;height:182px;display:none"
+    ></div>
+    <div
+      id="myrestartbutton"
+      style="position:absolute;padding-top:75px;padding-left:120px;display:none;"
+    >
+      <button onclick="restartGame()">Restart</button>
+    </div>
+    <div id="canvascontainer"></div>
+    <br />
+    <div style="text-align:center;width:320px;">
+      <button
+        ontouchstart="moveup()"
+        onmousedown="moveup()"
+        onmouseup="clearmove()"
+      >
+        UP</button
+      ><br /><br />
+      <button
+        ontouchstart="moveleft()"
+        onmousedown="moveleft()"
+        onmouseup="clearmove()"
+      >
+        LEFT
+      </button>
+      <button
+        ontouchstart="moveright()"
+        onmousedown="moveright()"
+        onmouseup="clearmove()"
+      >
+        RIGHT</button
+      ><br /><br />
+      <button
+        ontouchstart="movedown()"
+        onmousedown="movedown()"
+        onmouseup="clearmove()"
+      >
+        DOWN
+      </button>
+    </div>
+
+    <script>
+      const localUserInstance = localStorage.getItem(
+        'game-exercise-user',
+      )
+        ? JSON.parse(localStorage.getItem('game-exercise-user'))
+        : {};
+      if (Object.keys(localUserInstance).length == 0) {
+        localStorage.removeItem('game-exercise-user');
+        window.location.replace('/index.html');
+      } else {
+        (async () => {
+          const { token } = localUserInstance;
+          try {
+            const userInstance = await fetch('/user/profile', {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }).then(response => response.json());
+            document.getElementById('user-name').innerHTML =
+              userInstance.name;
+            document.getElementById('highscore').innerHTML =
+              userInstance.highScore;
+          } catch (error) {
+            localStorage.removeItem('game-exercise-user');
+            window.location.replace('/index.html');
+          }
+        })();
+      }
+
+      function logout() {
+        localStorage.removeItem('game-exercise-user');
+        window.location.replace('/index.html');
+        // TODO: Can do API call for logout here if we want
+      }
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.min.js"
+    ></script>
+    <script defer src="js/index.js"></script>
+  </body>
+</html>
