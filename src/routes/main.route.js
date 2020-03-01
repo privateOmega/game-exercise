@@ -48,6 +48,9 @@ mainRouter.post(
       .catch(error => {
         res.status(401).json({ message: 'unauthenticated' });
       });
+    if (!userInstance) {
+      return;
+    }
 
     const token = userInstance.generateAuthToken();
 
