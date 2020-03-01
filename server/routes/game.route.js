@@ -42,7 +42,6 @@ gameRouter.post(
       { score: score || 0 },
       { new: true },
     );
-    console.log(gameInstance);
 
     res.status(200).send(gameInstance);
   }),
