@@ -59,7 +59,10 @@
     <section class="section">
       <div class="container">
         <div class="columns is-centered is-vcentered">
-          <div class="column is-8" style="padding-left: 20%;padding-right: 20%;">
+          <div
+            class="column is-8"
+            style="padding-left: 20%;padding-right: 20%;"
+          >
             <p>Click the buttons to move the red square:</p>
             <div
               id="myfilter"
@@ -127,6 +130,9 @@
                 Authorization: `Bearer ${token}`,
               },
             }).then(response => response.json());
+            if (!userInstance) {
+              throw new Error('Unable to get user instance');
+            }
             document.getElementById('user-name').innerHTML =
               userInstance.name;
             document.getElementById('highscore').innerHTML =
