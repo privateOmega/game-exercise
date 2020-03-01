@@ -1,6 +1,6 @@
 {
   "name": "game-exercise",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A simple html and js game.",
   "main": "src/server.js",
   "scripts": {
@@ -12,8 +12,8 @@
     "html",
     "js"
   ],
-  "author": "ay",
-  "license": "ISC",
+  "author": "privateOmega <privateOmega>",
+  "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
