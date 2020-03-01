@@ -39,10 +39,16 @@ async function startGame() {
         Authorization: `Bearer ${token}`,
       },
     }).then(response => response.json());
+    if (!gameInstance) {
+      throw new Error('Unable to get game instance');
+    }
     gameId = gameInstance._id;
     myGameArea.start();
   } catch (error) {
     console.log('Unable to start game');
+    alert(
+      'Unable to start game. Either you have played maximum times for the day or network problems',
+    );
   }
 }
 
@@ -210,20 +216,25 @@ function clearmove(e) {
   myGamePiece.speedY = 0;
 }
 
-(async () => {
-  try {
-    const { token } = JSON.parse(
-      localStorage.getItem('game-exercise-user'),
-    );
+startGame();
 
-    const userInstance = await fetch('/user/profile', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(response => response.json());
-  } catch (error) {
-    console.log('Unable to get profile details');
+document.addEventListener('keydown', e => {
+  switch (e.code) {
+    case 'ArrowUp':
+      moveup();
+      break;
+    case 'ArrowDown':
+      movedown();
+      break;
+    case 'ArrowLeft':
+      moveleft();
+      break;
+    case 'ArrowRight':
+      moveright();
+      break;
+    default:
+      break;
   }
-  startGame();
-})();
+});
+
+document.addEventListener('keyup', clearmove);

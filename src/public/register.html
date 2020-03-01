@@ -1,7 +1,6 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <title>Login Page</title>
+    <title>Registration Page</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -22,6 +21,38 @@
         <div class="columns is-centered">
           <div class="column is-5">
             <form onsubmit="return false">
+              <div class="field">
+                <label class="label" for="firstName"
+                  >First Name</label
+                >
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="first name"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="lastName">Last Name</label>
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="last name"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+              </div>
               <div class="field">
                 <label class="label" for="email">Email</label>
                 <div class="control has-icons-left">
@@ -57,15 +88,14 @@
                   <button
                     class="button is-link"
                     type="submit"
-                    onclick="login()"
+                    onclick="register()"
                   >
-                    Login
+                    Register
                   </button>
                 </div>
               </div>
-
-              <a class="is-danger is-light" href="/register.html"
-                >Don't have an account? Register here.</a
+              <a class="is-danger is-light" href="/index.html"
+                >Already have an account? Login here.</a
               >
             </form>
           </div>
@@ -73,13 +103,15 @@
       </div>
     </section>
     <script>
-      async function login() {
+      async function register() {
         try {
           const credentials = {
-            email: document.forms[0].elements[0].value,
-            password: document.forms[0].elements[1].value,
+            firstName: document.forms[0].elements[0].value,
+            lastName: document.forms[0].elements[1].value,
+            email: document.forms[0].elements[2].value,
+            password: document.forms[0].elements[3].value,
           };
-          const response = await fetch('/login', {
+          const response = await fetch('/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -87,7 +119,7 @@
             body: JSON.stringify(credentials),
           }).then(response => response.json());
           if (!response.user) {
-            throw new Error('Unauthenticated');
+            throw new Error('Registration Failed');
           }
           localStorage.setItem(
             'game-exercise-user',
@@ -96,7 +128,7 @@
           window.location.replace('/game.html');
         } catch (error) {
           localStorage.removeItem('game-exercise-user');
-          alert('Login failed');
+          alert('Registration failed');
         }
       }
     </script>

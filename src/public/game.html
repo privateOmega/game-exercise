@@ -1,63 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
     <title>Dashboard Page</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
   </head>
   <body>
-    <div>
-      <div>
-        Hello
-        <h4 id="user-name">user</h4>
-        (highscore:
-        <h4 id="highscore">0</h4>
-        )
-      </div>
-      <a href="#" onclick="logout()">Logout</a>
-    </div>
-    <p>Click the buttons to move the red square:</p>
-    <div
-      id="myfilter"
-      style="position:absolute;background-color:#000000;opacity:0.3;width:322px;height:182px;display:none"
-    ></div>
-    <div
-      id="myrestartbutton"
-      style="position:absolute;padding-top:75px;padding-left:120px;display:none;"
+    <nav
+      class="navbar is-info"
+      role="navigation"
+      aria-label="main navigation"
     >
-      <button onclick="restartGame()">Restart</button>
-    </div>
-    <div id="canvascontainer"></div>
-    <br />
-    <div style="text-align:center;width:320px;">
-      <button
-        ontouchstart="moveup()"
-        onmousedown="moveup()"
-        onmouseup="clearmove()"
-      >
-        UP</button
-      ><br /><br />
-      <button
-        ontouchstart="moveleft()"
-        onmousedown="moveleft()"
-        onmouseup="clearmove()"
-      >
-        LEFT
-      </button>
-      <button
-        ontouchstart="moveright()"
-        onmousedown="moveright()"
-        onmouseup="clearmove()"
-      >
-        RIGHT</button
-      ><br /><br />
-      <button
-        ontouchstart="movedown()"
-        onmousedown="movedown()"
-        onmouseup="clearmove()"
-      >
-        DOWN
-      </button>
-    </div>
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io"
+          >Game Exercise</a
+        >
+        <a
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="basic-navbar" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item">
+            Hello&nbsp;
+            <h4 id="user-name">user</h4>
+          </a>
+          <a class="navbar-item">
+            Highscore:&nbsp;
+            <h4 id="highscore">0</h4>
+          </a>
+          <div class="navbar-item">
+            <a class="button is-danger" onclick="logout()">
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered is-vcentered">
+          <div
+            class="column is-8"
+            style="padding-left: 20%;padding-right: 20%;"
+          >
+            <p>Click the buttons to move the red square:</p>
+            <div
+              id="myfilter"
+              style="position:absolute;background-color:#000000;opacity:0.3;width:322px;height:182px;display:none"
+            ></div>
+            <div
+              id="myrestartbutton"
+              style="position:absolute;padding-top:75px;padding-left:120px;display:none;"
+            >
+              <button onclick="restartGame()">Restart</button>
+            </div>
+            <div id="canvascontainer"></div>
+            <br />
+            <div style="text-align:center;width:320px;">
+              <button
+                ontouchstart="moveup()"
+                onmousedown="moveup()"
+                onmouseup="clearmove()"
+              >
+                UP</button
+              ><br /><br />
+              <button
+                ontouchstart="moveleft()"
+                onmousedown="moveleft()"
+                onmouseup="clearmove()"
+              >
+                LEFT
+              </button>
+              <button
+                ontouchstart="moveright()"
+                onmousedown="moveright()"
+                onmouseup="clearmove()"
+              >
+                RIGHT</button
+              ><br /><br />
+              <button
+                ontouchstart="movedown()"
+                onmousedown="movedown()"
+                onmouseup="clearmove()"
+              >
+                DOWN
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <script>
       const localUserInstance = localStorage.getItem(
@@ -78,6 +130,9 @@
                 Authorization: `Bearer ${token}`,
               },
             }).then(response => response.json());
+            if (!userInstance) {
+              throw new Error('Unable to get user instance');
+            }
             document.getElementById('user-name').innerHTML =
               userInstance.name;
             document.getElementById('highscore').innerHTML =
