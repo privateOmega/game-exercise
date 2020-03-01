@@ -1,6 +1,6 @@
 {
   "name": "game-exercise",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A simple html and js game.",
   "main": "src/server.js",
   "scripts": {
@@ -48,7 +48,7 @@
     ]
   },
   "dependencies": {
-    "bcrypt": "^4.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
