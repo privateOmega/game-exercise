@@ -39,6 +39,9 @@ async function startGame() {
         Authorization: `Bearer ${token}`,
       },
     }).then(response => response.json());
+    if (!gameInstance) {
+      throw new Error('Unable to get game instance');
+    }
     gameId = gameInstance._id;
     myGameArea.start();
   } catch (error) {
