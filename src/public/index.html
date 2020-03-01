@@ -1,48 +1,104 @@
+<!DOCTYPE html>
 <html>
-  <title>Login Page</title>
-</html>
-<body>
-  <form onsubmit="return false">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" />
-    <br />
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" />
-    <br />
-    <button type="submit" onclick="login()">Login</button>
-    <br />
-    <a href="/register.html">Don't have an account? Register here.</a>
-  </form>
-  <script>
-    async function login() {
-      try {
-        const credentials = {
-          email: document.forms[0].elements[0].value,
-          password: document.forms[0].elements[1].value,
-        };
-        const response = await fetch('/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(credentials),
-        }).then(response => response.json());
-        if (!response.user) {
-          throw new Error('Unauthenticated');
+  <head>
+    <title>Login Page</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <form onsubmit="return false">
+          <div class="field">
+            <label class="label" for="email">Email</label>
+            <div class="control has-icons-left">
+              <input
+                class="input"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="email"
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="password">Password</label>
+            <div class="control has-icons-left">
+              <input
+                class="input"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="password"
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button
+                class="button is-link"
+                type="submit"
+                onclick="login()"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+
+          <a class="is-danger is-light" href="/register.html"
+            >Don't have an account? Register here.</a
+          >
+        </form>
+      </div>
+    </section>
+    <script>
+      async function login() {
+        try {
+          const credentials = {
+            email: document.forms[0].elements[0].value,
+            password: document.forms[0].elements[1].value,
+          };
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials),
+          }).then(response => response.json());
+          if (!response.user) {
+            throw new Error('Unauthenticated');
+          }
+          localStorage.setItem(
+            'game-exercise-user',
+            JSON.stringify(response.user),
+          );
+          window.location.replace('/game.html');
+        } catch (error) {
+          localStorage.removeItem('game-exercise-user');
+          alert('Login failed');
         }
-        localStorage.setItem(
-          'game-exercise-user',
-          JSON.stringify(response.user),
-        );
-        window.location.replace('/game.html');
-      } catch (error) {
-        localStorage.removeItem('game-exercise-user');
-        alert('Login failed');
       }
-    }
-  </script>
-  <script
-    defer
-    src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.min.js"
-  ></script>
-</body>
+    </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.min.js"
+    ></script>
+  </body>
+</html>
