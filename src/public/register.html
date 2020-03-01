@@ -18,82 +18,88 @@
   <body>
     <section class="section">
       <div class="container">
-        <form onsubmit="return false">
-          <div class="field">
-            <label class="label" for="firstName">First Name</label>
-            <div class="control has-icons-left">
-              <input
-                class="input"
-                type="text"
-                name="firstName"
-                id="firstName"
-                placeholder="first name"
-              />
-              <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-              </span>
-            </div>
-          </div>
-          <div class="field">
-            <label class="label" for="lastName">Last Name</label>
-            <div class="control has-icons-left">
-              <input
-                class="input"
-                type="text"
-                name="lastName"
-                id="lastName"
-                placeholder="last name"
-              />
-              <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-              </span>
-            </div>
-          </div>
-          <div class="field">
-            <label class="label" for="email">Email</label>
-            <div class="control has-icons-left">
-              <input
-                class="input"
-                type="email"
-                name="email"
-                id="email"
-                placeholder="email"
-              />
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-            </div>
-          </div>
-          <div class="field">
-            <label class="label" for="password">Password</label>
-            <div class="control has-icons-left">
-              <input
-                class="input"
-                type="password"
-                name="password"
-                id="password"
-                placeholder="password"
-              />
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-            </div>
-          </div>
-          <div class="field">
-            <div class="control">
-              <button
-                class="button is-link"
-                type="submit"
-                onclick="register()"
+        <div class="columns is-centered">
+          <div class="column is-5">
+            <form onsubmit="return false">
+              <div class="field">
+                <label class="label" for="firstName"
+                  >First Name</label
+                >
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="first name"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="lastName">Last Name</label>
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="last name"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="email">Email</label>
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="email"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="password">Password</label>
+                <div class="control has-icons-left">
+                  <input
+                    class="input"
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="password"
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <button
+                    class="button is-link"
+                    type="submit"
+                    onclick="register()"
+                  >
+                    Register
+                  </button>
+                </div>
+              </div>
+              <a class="is-danger is-light" href="/index.html"
+                >Already have an account? Login here.</a
               >
-                Register
-              </button>
-            </div>
+            </form>
           </div>
-          <a class="is-danger is-light" href="/index.html"
-            >Already have an account? Login here.</a
-          >
-        </form>
+        </div>
       </div>
     </section>
     <script>
