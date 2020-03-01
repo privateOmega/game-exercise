@@ -34,7 +34,7 @@
         );
         window.location.replace('/game.html');
       } catch (error) {
-        localStorage.clear('game-exercise-user');
+        localStorage.removeItem('game-exercise-user');
         alert('Login failed');
       }
     }
