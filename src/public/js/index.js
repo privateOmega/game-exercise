@@ -42,6 +42,9 @@ async function startGame() {
     if (!gameInstance) {
       throw new Error('Unable to get game instance');
     }
+    if (gameInstance.message === 'forbidden') {
+      throw new Error('Exhausted maximum limit');
+    }
     gameId = gameInstance._id;
     myGameArea.start();
   } catch (error) {

@@ -17,6 +17,14 @@ mainRouter.post(
   asyncMiddleware(async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
+    const userCount = await userModel.countDocuments({
+      email: email.toLowerCase(),
+    });
+    if (userCount > 0) {
+      res.status(403).json({ message: 'forbidden' });
+      return;
+    }
+
     const userInstance = await userModel.create({
       firstName,
       lastName,
@@ -44,7 +52,7 @@ mainRouter.post(
     const { email, password } = req.body;
 
     const userInstance = await userModel
-      .findByCredentials(email, password)
+      .findByCredentials(email.toLowerCase(), password)
       .catch(error => {
         res.status(401).json({ message: 'unauthenticated' });
       });
