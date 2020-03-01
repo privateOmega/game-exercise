@@ -2,9 +2,10 @@
   "name": "game-exercise",
   "version": "0.0.1",
   "description": "A simple html and js game.",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "test": "mocha server/tests/test.js"
+    "start": "node src/server.js",
+    "test": "mocha src/tests/test.js"
   },
   "keywords": [
     "game",

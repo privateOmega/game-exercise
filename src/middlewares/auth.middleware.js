@@ -5,10 +5,15 @@ const userModel = require('../models/user.model');
 const { TOKEN_SECRET } = process.env;
 
 const authMiddleware = async (req, res, next) => {
-  const headerValue = req.header('Authorization');
-  const token = headerValue.replace('Bearer ', '');
-
   try {
+    if (!req.header('Authorization')) {
+      throw new Error('No Authorization header');
+    }
+    const headerValue = req.header('Authorization');
+    if (!headerValue.startsWith('Bearer')) {
+      throw new Error('Wrong Authorization scheme');
+    }
+    const token = headerValue.replace('Bearer ', '');
     const payload = jwt.verify(token, TOKEN_SECRET);
     const userInstance = await userModel
       .findById(payload._id)

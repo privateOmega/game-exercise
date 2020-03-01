@@ -47,14 +47,14 @@ userSchema.virtual('name').get(function() {
   return `${this.firstName} ${this.lastName}`;
 });
 
-userSchema.pre('save', async function(next) {
-  const hash = await bcrypt.hash(this.password, 10);
+userSchema.pre('save', function() {
+  // FIXME: Even though hashSync can stop event loop execution, asynchronous version has some problem since hashed password doesn't give true on comparison with same password
+  const hash = bcrypt.hashSync(this.password, 10);
   this.password = hash;
-  next();
 });
 
-userSchema.methods.isValidPassword = async function(password) {
-  const compare = await bcrypt.compare(password, this.password);
+userSchema.methods.isValidPassword = function(password) {
+  const compare = bcrypt.compareSync(password, this.password);
   return compare;
 };
 
