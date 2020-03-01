@@ -1,0 +1,46 @@
+<html>
+  <title>Login Page</title>
+</html>
+<body>
+  <form onsubmit="return false">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" />
+    <br />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" />
+    <br />
+    <button type="submit" onclick="login()">Submit</button>
+  </form>
+  <script>
+    async function login() {
+      try {
+        const credentials = {
+          email: document.forms[0].elements[0].value,
+          password: document.forms[0].elements[1].value,
+        };
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(credentials),
+        }).then(response => response.json());
+        if (!response.user) {
+          throw new Error('Unauthenticated');
+        }
+        localStorage.setItem(
+          'game-exercise-user',
+          JSON.stringify(response.user),
+        );
+        window.location.replace('/game.html');
+      } catch (error) {
+        localStorage.clear('game-exercise-user');
+        alert('Login failed');
+      }
+    }
+  </script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.min.js"
+  ></script>
+</body>
