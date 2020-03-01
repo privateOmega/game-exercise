@@ -43,6 +43,9 @@ async function startGame() {
     myGameArea.start();
   } catch (error) {
     console.log('Unable to start game');
+    alert(
+      'Unable to start game. Either you have played maximum times for the day or network problems',
+    );
   }
 }
 
